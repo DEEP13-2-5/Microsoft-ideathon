@@ -104,7 +104,7 @@ export default function Dashboard() {
 
   /* ---------------- REAL DATA LOGIC ---------------- */
 
-  const isFailed = m?.status === "failed";
+  const isFailed = m && m.totalRequests === 0 && (m.vus > 0 || m.duration === null);
 
   // Safe access to failure rate with fallback for legacy data
   const failRate = m?.failureRateUnderTest ?? m?.errorRate ?? 0;
