@@ -388,9 +388,11 @@ router.get("/latest", async (req, res) => {
   }
 });
 
-// GET Test History -> GET /api/load-test/history
+// GET Test History -> GET /api/load-test/history (MUST BE ABOVE /:id)
 router.get("/history", async (req, res) => {
   try {
+    console.log(`📊 [Router] Fetching history for user: ${req.user._id}`);
+
     // Fetch last 5 sessions for the user, ordered by date
     const sessions = await TestSession.find({ user: req.user._id })
       .sort({ createdAt: -1 })
@@ -412,6 +414,7 @@ router.get("/history", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch test history" });
   }
 });
+
 
 // GET Test Result -> GET /api/load-test/:id
 router.get("/:id", async (req, res) => {
